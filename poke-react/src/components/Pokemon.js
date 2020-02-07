@@ -1,20 +1,6 @@
 import React, { Component } from 'react';
+import OptionsImage from './OptionsImage';
 import './Pokemon.css';
-
-const OptionsImage = ({ onClick, index }) => {
-    return (
-        <div>
-            <button 
-                className="passLeft" 
-                onClick={() => onClick(index - 1, -1)}
-            >Left</button>
-            <button 
-                className="passRight" 
-                onClick={() => onClick(index + 1, 1)}
-            >Right</button>
-        </div>
-    )
-}
 
 class Pokemon extends Component {
 
@@ -25,7 +11,11 @@ class Pokemon extends Component {
             info: {},
             sprites: [],
             indexImage: 4,
-            color: getRandomColor(),
+            styles: {
+                backgroundColor: getRandomColor(),
+                transform: 'scale(1)',
+            },
+            showControls: false,
         }
     }
 
@@ -38,7 +28,7 @@ class Pokemon extends Component {
         });
     }
 
-    handleClick = (index, value) => {
+    handleClick = async (index, value) => {
 
         const { sprites } = this.state;
 
@@ -51,8 +41,20 @@ class Pokemon extends Component {
             return this.handleClick(index + value, value); 
         }
 
+        this.setState({
+            styles: {...this.state.styles, transform: 'scale(0)'},
+        })
+        await sleep(700);
         this.setState({indexImage: index});
+        this.setState({
+            styles: {...this.state.styles, transform: 'scale(1)'},
+        })
     }
+
+    toggleVisibity = () => {
+        console.log(this.state.showControls)
+        this.setState({showControls: !this.state.showControls});
+    }    
 
     render() {
         const {name} = this.state.info;
@@ -61,24 +63,29 @@ class Pokemon extends Component {
                 <p className="pokemonName">
                     {name}
                 </p>
-                <div style={this.state.color} className="image">
-                    <img 
-                        src={this.state.sprites && this.state.sprites[this.state.indexImage]} 
-                        alt={`${name} visto de frente`} 
-                    />
+                <div 
+                    style={{backgroundColor: this.state.styles.backgroundColor}}
+                    className="imageWrap"
+                    onMouseOver={this.toggleVisibity}
+                    onMouseOut={this.toggleVisibity}>
+                        <img 
+                            style={{ transform: this.state.styles.transform }}
+                            src={this.state.sprites && this.state.sprites[this.state.indexImage]} 
+                            alt={`${name} visto de frente`} 
+                        />
+                        {this.state.sprites && <OptionsImage
+                            index={this.state.indexImage}
+                            onClick={this.handleClick} 
+                            style={{ opacity: this.state.showControls ? '1' : '0' }}
+                        />}
                 </div>
-                {this.state.sprites && <OptionsImage
-                    index={this.state.indexImage}
-                    onClick={this.handleClick} 
-                />}
             </div>
         );
     }
 }
 
-const getRandomColor = () => {
-    const color = '#' + Math.random().toString().slice(2, 8);
-    return {backgroundColor: color};
-}
+const sleep = async (time) => await new Promise(r => setTimeout(r, time));
+
+const getRandomColor = () => '#' + Math.random().toString().slice(2, 8);
 
 export default Pokemon;

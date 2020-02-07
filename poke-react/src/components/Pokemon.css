@@ -11,7 +11,8 @@
     border-radius: 2%;
 }
 
-.image {
+.imageWrap {
+    position: relative;
     width: 100%;
     border-radius: 100%;
     display: flex;
@@ -20,6 +21,7 @@
 
 img {
     width: 50%;
+    transition: transform .7s ease-in-out;
 }
 
 .pokemonName {
@@ -27,4 +29,37 @@ img {
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.arrowLeft {
+    position: absolute;
+    top: 35%;
+    left: 2%;
+    color: white;
+    cursor: pointer;
+    transition: opacity .4s ease-in-out;
+}
+
+.arrowRight {
+    position: absolute;
+    right: 2%;
+    top: 35%;
+    color: white;
+    cursor: pointer;
+    transition: opacity .4s ease-in-out;
+}
+
+svg {
+    width: 50px;
+    height: 50px;
+    transition: color .3s ease-in-out;
+}
+
+svg:hover {
+    color: gray;
+}
+
+svg * {
+    width: 100%;
+    height: 100%;
 }
