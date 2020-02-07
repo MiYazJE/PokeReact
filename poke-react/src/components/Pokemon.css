@@ -1,0 +1,30 @@
+
+.Pokemon {
+    min-width: 350px;
+    min-height: 400px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    margin: 2%;
+    border-radius: 2%;
+}
+
+.image {
+    width: 100%;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    width: 50%;
+}
+
+.pokemonName {
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
