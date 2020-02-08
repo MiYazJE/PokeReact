@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import OptionsImage from './OptionsImage';
+import ImagePokemon from './ImagePokemon';
 import './Pokemon.css';
 
 class Pokemon extends Component {
@@ -10,81 +10,38 @@ class Pokemon extends Component {
             url: props.value.url,
             info: {},
             sprites: [],
-            indexImage: 4,
-            styles: {
-                backgroundColor: getRandomColor(),
-                transform: 'scale(1)',
-            },
-            showControls: false,
         }
     }
 
     async componentDidMount() {
         const res  = await fetch(this.state.url);
         const data = await res.json();
+
         this.setState({
             info: data,
             sprites: Object.values(data.sprites),
         });
     }
 
-    handleClick = async (index, value) => {
-
-        const { sprites } = this.state;
-
-        if (index === -1 || index === sprites.length) {
-            index = (index === -1) ? sprites.length - 1 : 0;
-            return this.handleClick(index + value, value); 
-        }
-
-        if (!sprites[index]) {
-            return this.handleClick(index + value, value); 
-        }
-
-        this.setState({
-            styles: {...this.state.styles, transform: 'scale(0)'},
-        })
-        await sleep(700);
-        this.setState({indexImage: index});
-        this.setState({
-            styles: {...this.state.styles, transform: 'scale(1)'},
-        })
-    }
-
-    handleMouseOverOut = () => {
-        this.setState({showControls: !this.state.showControls});
-    }    
-
     render() {
-        const {name} = this.state.info;
+        const {name, id} = this.state.info;
         return (
             <div className="Pokemon">
                 <p className="pokemonName">
-                    {name}
+                    <span>#{id}</span> {name}
                 </p>
-                <div 
-                    style={{backgroundColor: this.state.styles.backgroundColor}}
-                    className="imageWrap"
-                    onMouseOver={this.handleMouseOverOut}
-                    onMouseOut={this.handleMouseOverOut}>
-                        <img 
-                            style={{ transform: this.state.styles.transform }}
-                            src={this.state.sprites && this.state.sprites[this.state.indexImage]} 
-                            alt={`${name} visto de frente`} 
-                        />
-                        {this.state.sprites && <OptionsImage
-                            onClick={this.handleClick} 
-                            index={this.state.indexImage}
-                            style={{ opacity: this.state.showControls ? '1' : '0' }}
-                        />}
+                <ImagePokemon 
+                    sprites={this.state.sprites} 
+                    name={name}
+                />
+                <div className="pokemonTypes">
+                    {this.state.info.types && this.state.info.types.map(type => (
+                        <p key={type.type.name} >{type.type.name}</p>
+                    ))}
                 </div>
             </div>
         );
     }
 }
-
-const sleep = async (time) => await new Promise(r => setTimeout(r, time));
-
-const getRandomColor = () => '#' + Math.random().toString().slice(2, 8);
 
 export default Pokemon;

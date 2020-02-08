@@ -11,63 +11,10 @@
     border-radius: 2%;
 }
 
-.imageWrap {
-    position: relative;
-    width: 100%;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-img {
-    width: 50%;
-    transition: transform .7s ease-in-out;
-}
-
 .pokemonName {
     width: 100%;
+    font-size: x-large;
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
-}
-
-.arrowLeft {
-    position: absolute;
-    top: 35%;
-    left: 2%;
-    color: #D6D6D6;
-    cursor: pointer;
-    transition: color, opacity .4s ease-in-out;
-}
-
-.arrowLeft:hover {
-    color: white;
-}
-
-.arrowRight {
-    position: absolute;
-    right: 2%;
-    top: 35%;
-    color: #D6D6D6;
-    cursor: pointer;
-    transition: color, opacity .4s ease-in-out;
-}
-
-.arrowRight:hover {
-    color: white;
-}
-
-svg {
-    width: 50px;
-    height: 50px;
-    transition: color .3s ease-in-out;
-}
-
-svg:hover {
-    color: 
-}
-
-svg * {
-    width: 100%;
-    height: 100%;
 }

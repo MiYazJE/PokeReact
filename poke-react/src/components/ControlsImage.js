@@ -1,7 +1,7 @@
 import React from 'react';
 import { TiArrowRightThick, TiArrowLeftThick } from 'react-icons/ti';
 
-const OptionsImage = ({ onClick, index, style }) => {
+const ControlsImage = ({ onClick, index, style }) => {
     return (
         <React.Fragment>
             <div 
@@ -18,4 +18,4 @@ const OptionsImage = ({ onClick, index, style }) => {
     )
 }
 
-export default OptionsImage;
+export default ControlsImage;
