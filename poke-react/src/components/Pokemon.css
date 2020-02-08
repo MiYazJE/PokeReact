@@ -18,3 +18,12 @@
     text-transform: uppercase;
     font-weight: bold;
 }
+
+.pokemonTypes {
+    display: flex;
+}
+
+.imgType {
+    width: 50px;
+    margin: 5px;
+}

@@ -2,6 +2,20 @@ import React, { Component } from 'react';
 import ImagePokemon from './ImagePokemon';
 import './Pokemon.css';
 
+const getImagePokemonType = (type) => `https://veekun.com/dex/media/types/en/${type}.png`;
+
+const getPokemonTypes = (types) => {
+    return (
+        types.map(type => (
+            <img 
+                className="imgType"
+                src={getImagePokemonType(type.type.name)}
+                key={type.type.name}
+            /> 
+        ))
+    )
+}
+
 class Pokemon extends Component {
 
     constructor(props) {
@@ -35,9 +49,7 @@ class Pokemon extends Component {
                     name={name}
                 />
                 <div className="pokemonTypes">
-                    {this.state.info.types && this.state.info.types.map(type => (
-                        <p key={type.type.name} >{type.type.name}</p>
-                    ))}
+                    {this.state.info.types && getPokemonTypes(this.state.info.types)}
                 </div>
             </div>
         );
