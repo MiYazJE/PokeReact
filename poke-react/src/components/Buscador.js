@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Buscador.css';
 
 export class Buscador extends Component {
 
@@ -16,7 +17,7 @@ export class Buscador extends Component {
                     <input
                     ref={this.searchRef}
                     type="text"
-                    placeholder="Busca un pokemon..." />
+                    placeholder="Busca un pokemón..." />
                 </div>
                 <div className="wrapInput">
                     <input 
