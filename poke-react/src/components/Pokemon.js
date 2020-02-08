@@ -5,6 +5,7 @@ import './Pokemon.css';
 const getImagePokemonType = (type) => `https://veekun.com/dex/media/types/en/${type}.png`;
 
 const getPokemonTypes = (types) => {
+    if (!types) return null;
     return (
         types.map(type => (
             <img 
@@ -18,38 +19,19 @@ const getPokemonTypes = (types) => {
 
 class Pokemon extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            url: props.value.url,
-            info: {},
-            sprites: [],
-        }
-    }
-
-    async componentDidMount() {
-        const res  = await fetch(this.state.url);
-        const data = await res.json();
-
-        this.setState({
-            info: data,
-            sprites: Object.values(data.sprites),
-        });
-    }
-
     render() {
-        const {name, id} = this.state.info;
+        const {name, id, sprites, types} = this.props.pokemon;
         return (
             <div className="Pokemon">
                 <p className="pokemonName">
                     <span>#{id}</span> {name}
                 </p>
                 <ImagePokemon 
-                    sprites={this.state.sprites} 
+                    sprites={sprites} 
                     name={name}
                 />
                 <div className="pokemonTypes">
-                    {this.state.info.types && getPokemonTypes(this.state.info.types)}
+                    {getPokemonTypes(types)}
                 </div>
             </div>
         );
