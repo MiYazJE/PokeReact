@@ -6,8 +6,8 @@ export class Buscador extends Component {
     searchRef = React.createRef();
 
     sendPokemon = () => {
-        let pokemon = this.searchRef.current.value;
-        this.props.onSubmit(pokemon);
+        let pokemonName = this.searchRef.current.value;
+        this.props.onSubmit(pokemonName);
     }
 
     render() {

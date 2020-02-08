@@ -42,7 +42,3 @@ input[type="submit"]:hover {
     background-color: blue;
     color: white;
 }
-
-input[type="submit"]:active {
-    transform: translateY(15px);
-}

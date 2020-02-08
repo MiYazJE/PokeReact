@@ -12,52 +12,75 @@ class App extends Component {
 			pokemons: {},
 			filtered: [],
 			show: false,
+			items: 20,
+			loading: false,
 		}
-		this.readAllPokemons();
 	}
 
 	readAllPokemons = async () => {
 
-		const res  = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+		if (Object.keys(this.state.pokemons).length !== 0) return;
+
+		const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
 		const data = await res.json();
-		
+
 		let info = await data.results.map(async pokemon => {
 			const data = await fetch(pokemon.url);
-			const res  = await data.json(); 
+			const res = await data.json();
 			res.sprites = Object.values(res.sprites);
 			return res;
 		});
 
-		Promise.all(info)
+		await Promise.all(info)
 			.then(values => {
-				this.setState({pokemons: values})
+				this.setState({ pokemons: values })
 			})
 	}
 
-	filterPokemons = () => {
+	filterPokemons = async () => {
+
+		await this.readAllPokemons();
+
 		let searched = this.state.pokemonBuscar.toLowerCase();
 		let filtered = this.state.pokemons.filter(pokemon => {
 			return pokemon.name.toLowerCase().includes(searched);
 		});
+
 		this.setState({
 			show: true,
-			filtered
+			filtered,
 		})
 	}
 
 	handleSubmit = (pokemonBuscar) => {
 		this.setState({
-			 pokemonBuscar 
-		}, () => {
-			this.filterPokemons();
+			pokemonBuscar
+		}, async () => {
+			await this.filterPokemons();
 		});
+	}
+
+	componentDidMount() {
+		this.refs.myScroll.addEventListener('scroll', this.handleScroll, true);
+	}
+
+	// Load more pokemons when reach the limit (infinity scroll) 
+	handleScroll = () => {
+
+		const { scrollTop, clientHeight, scrollHeight } = this.refs.myScroll;
+
+		if (scrollTop + clientHeight >= scrollHeight) {
+			this.setState({ items: this.state.items + 20 })
+		}
+
 	}
 
 	render() {
 		return (
-			<div>
+			<div ref="myScroll" className="application" style={{ height: "100vh", overflow: "auto" }}>
 				<Buscador onSubmit={this.handleSubmit} />
-				{this.state.show && <PokemonList filtered={this.state.filtered} />}
+				{this.state.show &&
+					<PokemonList filtered={this.state.filtered.slice(0, this.state.items)} />}
 			</div>
 		);
 	}
