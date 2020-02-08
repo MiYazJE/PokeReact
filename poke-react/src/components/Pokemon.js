@@ -51,8 +51,7 @@ class Pokemon extends Component {
         })
     }
 
-    toggleVisibity = () => {
-        console.log(this.state.showControls)
+    handleMouseOverOut = () => {
         this.setState({showControls: !this.state.showControls});
     }    
 
@@ -66,16 +65,16 @@ class Pokemon extends Component {
                 <div 
                     style={{backgroundColor: this.state.styles.backgroundColor}}
                     className="imageWrap"
-                    onMouseOver={this.toggleVisibity}
-                    onMouseOut={this.toggleVisibity}>
+                    onMouseOver={this.handleMouseOverOut}
+                    onMouseOut={this.handleMouseOverOut}>
                         <img 
                             style={{ transform: this.state.styles.transform }}
                             src={this.state.sprites && this.state.sprites[this.state.indexImage]} 
                             alt={`${name} visto de frente`} 
                         />
                         {this.state.sprites && <OptionsImage
-                            index={this.state.indexImage}
                             onClick={this.handleClick} 
+                            index={this.state.indexImage}
                             style={{ opacity: this.state.showControls ? '1' : '0' }}
                         />}
                 </div>
