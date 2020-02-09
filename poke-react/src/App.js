@@ -69,7 +69,7 @@ class App extends Component {
 
 		const { scrollTop, clientHeight, scrollHeight } = this.refs.myScroll;
 
-		if (scrollTop + clientHeight >= scrollHeight) {
+		if (scrollTop + clientHeight + 100 >= scrollHeight) {
 			this.setState({ items: this.state.items + 20 })
 		}
 
