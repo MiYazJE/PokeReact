@@ -21,7 +21,7 @@ const getPokemonTypes = (types) => {
 class Pokemon extends Component {
 
     render() {
-        const { name, id, sprites, types, description } = this.props.pokemon;
+        const { name, id, sprites, types, description, weight } = this.props.pokemon;
         return (
             <div className="Pokemon">
                 <p className="pokemonName">
@@ -38,6 +38,9 @@ class Pokemon extends Component {
                     <p>
                         {description}
                     </p>
+                </div>
+                <div className="wrap-weight">
+                    Peso: {weight}Kg
                 </div>
             </div>
         );
