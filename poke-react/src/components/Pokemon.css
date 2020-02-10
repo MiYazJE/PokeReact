@@ -1,6 +1,7 @@
 
 .Pokemon {
     min-width: 350px;
+    width: 350px;
     min-height: 400px;
     display: flex;
     justify-content: flex-start;
@@ -33,4 +34,17 @@
 .imgType {
     width: 50px;
     margin: 5px;
+}
+
+.description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.description p {
+    color: white;
+    margin-top: 20px;
+    font-size: 15px;
 }

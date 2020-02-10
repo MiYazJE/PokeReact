@@ -18,15 +18,36 @@ class App extends Component {
 		}
 	}
 
+	async fetchDescription(url) {
+
+		let description = '';
+
+		const res = await fetch(url);
+		const data = await res.json();
+
+		data.flavor_text_entries.forEach(text => {
+			if (text.language.name === 'es')
+				description = text.flavor_text;
+		})
+
+		return description;
+	}
+
 	readAllPokemons = async () => {
 
 		const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
 		const data = await res.json();
 
 		let info = await data.results.map(async pokemon => {
+
 			const data = await fetch(pokemon.url);
 			const res = await data.json();
+
+			let description = await this.fetchDescription(res.species.url); 
+
+			res.description = description;
 			res.sprites = Object.values(res.sprites);
+			
 			return res;
 		});
 
