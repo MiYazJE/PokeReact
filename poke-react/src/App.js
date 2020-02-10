@@ -6,11 +6,12 @@ import './App.css';
 
 class App extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			pokemonBuscar: '',
 			pokemons: {},
+			pokemonsToSuggest: [],
 			filtered: [],
 			show: false,
 			items: 20,
@@ -25,6 +26,7 @@ class App extends Component {
 		const res = await fetch(url);
 		const data = await res.json();
 
+		// Get only the spanish description, last one
 		data.flavor_text_entries.forEach(text => {
 			if (text.language.name === 'es')
 				description = text.flavor_text;
@@ -38,22 +40,32 @@ class App extends Component {
 		const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
 		const data = await res.json();
 
-		let info = await data.results.map(async pokemon => {
+		const pokemonsToSuggest = [];
+
+		let pokemons = await data.results.map(async pokemon => {
 
 			const data = await fetch(pokemon.url);
 			const res = await data.json();
 
 			let description = await this.fetchDescription(res.species.url); 
 
+			pokemonsToSuggest.push({
+				name: res.name, 
+				image: res.sprites.front_default
+			});
+			
 			res.description = description;
 			res.sprites = Object.values(res.sprites);
 			
 			return res;
 		});
 
-		await Promise.all(info)
+		await Promise.all(pokemons)
 			.then(values => {
-				this.setState({ pokemons: values })
+				this.setState({ 
+					pokemons: values,
+					pokemonsToSuggest
+				})
 			})
 	}
 
@@ -99,9 +111,14 @@ class App extends Component {
 	render() {
 		return (
 			<div ref="myScroll" className="application" style={{ height: "100vh", overflow: "auto" }}>
-				{!this.state.loading && <Buscador onSubmit={this.handleSubmit} />}
+				{!this.state.loading && <Buscador 
+					onSubmit={this.handleSubmit} 
+					pokemonsToSuggest={this.state.pokemonsToSuggest}/>
+				}
 				{this.state.show &&
-					<PokemonList filtered={this.state.filtered.slice(0, this.state.items)} />}
+					<PokemonList 
+						filtered={this.state.filtered.slice(0, this.state.items)}/>
+				}
 				{this.state.loading && <Loading />}
 			</div>
 		);

@@ -16,6 +16,20 @@ export class ImagePokemon extends Component {
         }
     }
 
+    changeImageWithTransition = async (index) => {
+
+        this.setState({
+            styles: {...this.state.styles, transform: 'scale(0)'},
+        })
+
+        await sleep(700);
+
+        this.setState({
+            indexImage: index,
+            styles: {...this.state.styles, transform: 'scale(1)'},
+        })
+    }
+
     handleClick = async (index, value) => {
 
         const { sprites } = this.props;
@@ -29,14 +43,7 @@ export class ImagePokemon extends Component {
             return this.handleClick(index + value, value); 
         }
 
-        this.setState({
-            styles: {...this.state.styles, transform: 'scale(0)'},
-        })
-        await sleep(700);
-        this.setState({indexImage: index});
-        this.setState({
-            styles: {...this.state.styles, transform: 'scale(1)'},
-        })
+        await this.changeImageWithTransition(index);
     }
 
     handleMouseOverOut = () => {
@@ -53,7 +60,7 @@ export class ImagePokemon extends Component {
                 <img
                     style={{ transform: this.state.styles.transform }}
                     src={this.props.sprites && this.props.sprites[this.state.indexImage]}
-                    alt={`${this.props.name} visto de frente`}
+                    alt={""}
                 />
                 {this.props.sprites && <ControlsImage
                     onClick={this.handleClick}

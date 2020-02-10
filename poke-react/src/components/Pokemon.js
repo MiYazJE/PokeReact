@@ -10,9 +10,9 @@ const getPokemonTypes = (types) => {
         types.map(type => (
             <img
                 className="imgType"
-                alt={'Nombre del tipo de pokemón'}
                 src={getImagePokemonType(type.type.name)}
                 key={type.type.name}
+                alt={""}
             />
         ))
     )
