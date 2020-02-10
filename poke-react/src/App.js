@@ -37,7 +37,7 @@ class App extends Component {
 
 	readAllPokemons = async () => {
 
-		const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+		const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
 		const data = await res.json();
 
 		const pokemonsToSuggest = [];

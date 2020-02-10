@@ -27,7 +27,7 @@ export class Buscador extends Component {
             userInput: this.searchRef.current.value,
         });
 
-        const searched = this.searchRef.current.value.toLowerCase();
+        const searched = this.searchRef.current.value.toLowerCase().trim();
 
         // If the word to search its empty, hide suggestions
         if (!searched) {
