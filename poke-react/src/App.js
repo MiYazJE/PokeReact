@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PokemonList from './components/PokemonList';
 import Buscador from './components/Buscador';
+import Loading from './components/Loading';
 import './App.css';
 
 class App extends Component {
@@ -19,8 +20,6 @@ class App extends Component {
 
 	readAllPokemons = async () => {
 
-		if (Object.keys(this.state.pokemons).length !== 0) return;
-
 		const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
 		const data = await res.json();
 
@@ -38,8 +37,6 @@ class App extends Component {
 	}
 
 	filterPokemons = async () => {
-
-		await this.readAllPokemons();
 
 		let searched = this.state.pokemonBuscar.toLowerCase();
 		let filtered = this.state.pokemons.filter(pokemon => {
@@ -60,8 +57,11 @@ class App extends Component {
 		});
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
+		this.setState({ loading: true });
+		await this.readAllPokemons();
 		this.refs.myScroll.addEventListener('scroll', this.handleScroll, true);
+		this.setState({ loading: false });
 	}
 
 	// Load more pokemons when reach the limit (infinity scroll) 
@@ -78,9 +78,10 @@ class App extends Component {
 	render() {
 		return (
 			<div ref="myScroll" className="application" style={{ height: "100vh", overflow: "auto" }}>
-				<Buscador onSubmit={this.handleSubmit} />
+				{!this.state.loading && <Buscador onSubmit={this.handleSubmit} />}
 				{this.state.show &&
 					<PokemonList filtered={this.state.filtered.slice(0, this.state.items)} />}
+				{this.state.loading && <Loading />}
 			</div>
 		);
 	}
