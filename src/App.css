@@ -1,0 +1,14 @@
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-size: 10px;
+    font-family: monospace;
+    min-height: 100vh;
+    background: linear-gradient(344deg, rgba(28,42,187,1) 0%, rgba(40,39,120,1) 49%, rgba(215,15,19,1) 92%);
+    background-position: center;
+    background-repeat: no-repeat;
+}
