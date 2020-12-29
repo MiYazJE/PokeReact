@@ -23,7 +23,7 @@ const Pokemon = ({
         name, id, sprites, types, description, weight, image,
     },
 }) => (
-    <div className="Pokemon">
+    <div key={id} className="Pokemon">
         <p className="pokemonName">
             <span>
                 #
