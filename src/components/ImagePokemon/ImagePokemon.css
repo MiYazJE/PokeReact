@@ -1,5 +1,3 @@
-
-
 .imageWrap {
     position: relative;
     width: 90%;
@@ -9,12 +7,14 @@
     transition: box-shadow .5s ease-in-out;
 }
 
-.imageWrap:hover{
+.imageWrap:hover {
     box-shadow: -2px 3px 32px 0px rgba(255,255,255,1);
 }
 
-img {
-    width: 50%;
+.pokemon {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
     transition: transform .7s ease-in-out;
 }
 
