@@ -12,3 +12,9 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.PokemonList {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
