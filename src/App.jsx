@@ -25,15 +25,14 @@ const App = () => {
     };
 
     const searchPokemons = async (pokemonName) => {
+        setShowSuggestions(false);
         setLoading(true);
         const pokemonsFiltered = filterPokemons(pokemonName);
         const pokemons = await loadPokemonsInfo(pokemonsFiltered);
-        setShowSuggestions(false);
         setPokemonsList(pokemons);
         setLoading(false);
     };
 
-    if (loading) return <Loading />;
     return (
         <div className="application" style={{ height: '100vh', overflow: 'auto' }}>
             <Search
@@ -42,9 +41,12 @@ const App = () => {
                 showSuggestions={showSuggestions}
                 filterPokemons={handleFilterPokemons}
             />
-            <div className="PokemonList">
-                {pokemonsList.map((pokemon) => <Pokemon key={pokemon.name} pokemon={pokemon} />)}
-            </div>
+            {loading ? <Loading /> : (
+                <div className="PokemonList">
+                    {pokemonsList
+                        .map((pokemon) => <Pokemon key={pokemon.name} pokemon={pokemon} />)}
+                </div>
+            )}
         </div>
     );
 };
